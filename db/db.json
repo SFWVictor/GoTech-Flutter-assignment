@@ -1,0 +1,57 @@
+{
+	"questionnaire": {
+		"title": "GoTech Questionnaire",
+		"subtitle": "Show me what you got!",
+		"questions": [
+			{
+				"type": "multipleChoice",
+				"required": true,
+				"title": "What language is your favourite?",
+				"options": [
+					{
+						"type": "closed",
+						"caption": "Kotlin"
+					},
+					{
+						"type": "closed",
+						"caption": "Java"
+					},
+					{
+						"type": "closed",
+						"caption": "C++"
+					}
+				]
+			},
+			{
+				"type": "open",
+				"required": false,
+				"title": "What do you like about programming?",
+				"hint": "Your answer"
+			},
+			{
+				"type": "multipleChoice",
+				"required": true,
+				"title": "How was the assignment?",
+				"options": [
+					{
+						"type": "closed",
+						"caption": "Easy"
+					},
+					{
+						"type": "closed",
+						"caption": "Normal"
+					},
+					{
+						"type": "closed",
+						"caption": "Hard"
+					},
+					{
+						"type": "open",
+						"caption": "Other:"
+					}
+				]
+			}
+		]
+	},
+	"answers": []
+}
