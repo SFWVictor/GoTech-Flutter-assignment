@@ -7,7 +7,7 @@ class MultipleChoiceOpenAnswer extends Answer {
 
   @override
   Map<String, dynamic> toJson() => {
-        "questionId": questionId,
-        "body": body,
+        'questionId': questionId,
+        'body': body,
       };
 }

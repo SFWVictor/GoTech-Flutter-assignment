@@ -2,7 +2,7 @@ import 'multiple_choice/question.dart';
 import 'open/question.dart';
 
 abstract class Question {
-  static const String typeKeyName = "type";
+  static const String typeKeyName = 'type';
 
   final int id;
   final bool isRequired;
@@ -19,7 +19,7 @@ abstract class Question {
         return OpenQuestion.fromJson(json);
       default:
         throw Exception(
-            "Unknown type $questionType when deserializing type ${(Question).toString()}.");
+            'Unknown type $questionType when deserializing type ${(Question).toString()}.');
     }
   }
 

@@ -10,7 +10,7 @@ class QuestionnaireAnswers {
   List<Answer> answers;
 
   Map<String, dynamic> toJson() => {
-        "questionnaireId": questionnaireId,
-        "answers": List<dynamic>.from(answers.map((x) => x.toJson())),
+        'questionnaireId': questionnaireId,
+        'answers': List<dynamic>.from(answers.map((x) => x.toJson())),
       };
 }

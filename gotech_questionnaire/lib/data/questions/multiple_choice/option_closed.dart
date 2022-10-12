@@ -1,7 +1,7 @@
 import 'option.dart';
 
 class MultipleChoiceOptionClosed extends Option {
-  static const answerType = "closed";
+  static const answerType = 'closed';
 
   final String caption;
 
@@ -11,12 +11,12 @@ class MultipleChoiceOptionClosed extends Option {
 
   factory MultipleChoiceOptionClosed.fromJson(Map<String, dynamic> json) =>
       MultipleChoiceOptionClosed(
-        caption: json["caption"],
+        caption: json['caption'],
       );
 
   @override
   Map<String, dynamic> toJson() => {
-        "type": answerType,
-        "caption": caption,
+        'type': answerType,
+        'caption': caption,
       };
 }

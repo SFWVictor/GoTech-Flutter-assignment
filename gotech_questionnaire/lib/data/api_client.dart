@@ -24,7 +24,7 @@ class ApiClient {
 
   Future postAnswers(QuestionnaireAnswers answers) async {
     final response = await http.post(answersEndpoint,
-        body: answers, headers: {"Content-Type": "application/json"});
+        body: answers, headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode >= 400) {
       throw Exception('Failed to post answwers');

@@ -2,7 +2,7 @@ import 'option_closed.dart';
 import 'option_open.dart';
 
 abstract class Option {
-  static const String typeKeyName = "type";
+  static const String typeKeyName = 'type';
 
   Option();
 
@@ -15,7 +15,7 @@ abstract class Option {
         return MultipleChoiceOptionOpen.fromJson(json);
       default:
         throw Exception(
-            "Unknown type $answerType when deserializing type ${(Option).toString()}.");
+            'Unknown type $answerType when deserializing type ${(Option).toString()}.');
     }
   }
 
