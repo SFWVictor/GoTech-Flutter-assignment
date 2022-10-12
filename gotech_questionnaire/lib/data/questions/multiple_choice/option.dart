@@ -14,7 +14,7 @@ abstract class Option {
       case MultipleChoiceOptionOpen.answerType:
         return MultipleChoiceOptionOpen.fromJson(json);
       default:
-        throw StateError(
+        throw Exception(
             "Unknown type $answerType when deserializing type ${(Option).toString()}.");
     }
   }

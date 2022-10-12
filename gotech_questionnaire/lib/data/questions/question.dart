@@ -1,12 +1,13 @@
-import 'package:gotech_questionnaire/data/questions/multiple_choice/question.dart';
-import 'package:gotech_questionnaire/data/questions/open/question.dart';
+import 'multiple_choice/question.dart';
+import 'open/question.dart';
 
 abstract class Question {
   static const String typeKeyName = "type";
 
+  final int id;
   final bool isRequired;
 
-  Question(this.isRequired);
+  Question(this.id, this.isRequired);
 
   factory Question.fromJson(Map<String, dynamic> json) {
     var questionType = json[typeKeyName];
@@ -17,7 +18,7 @@ abstract class Question {
       case OpenQuestion.questionType:
         return OpenQuestion.fromJson(json);
       default:
-        throw StateError(
+        throw Exception(
             "Unknown type $questionType when deserializing type ${(Question).toString()}.");
     }
   }
