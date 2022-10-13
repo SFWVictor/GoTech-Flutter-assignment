@@ -12,24 +12,38 @@ class ApiClient {
   final Uri questionnairesEndpoint = Uri.parse(host + questionnaires);
   final Uri answersEndpoint = Uri.parse(host + answers);
 
-  Future<Questionnaire> getQuestionnaire() async {
-    final response = await http.get(questionnairesEndpoint);
+  Future<Questionnaire?> getQuestionnaire() async {
+    http.Response response;
+    Questionnaire result;
+    try {
+      response = await http.get(questionnairesEndpoint);
+      result = Questionnaire.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
 
     if (response.statusCode == 200) {
-      return Questionnaire.fromJson(jsonDecode(response.body));
+      return result;
     } else {
-      throw Exception('Failed to load questionnaire');
+      return null;
     }
   }
 
-  Future postAnswers(QuestionnaireAnswers answers) async {
-    final response = await http.post(answersEndpoint,
-        body: answers, headers: {'Content-Type': 'application/json'});
+  Future<bool> postAnswers(QuestionnaireAnswers answers) async {
+    http.Response response;
+
+    try {
+      response = await http.post(answersEndpoint,
+          body: jsonEncode(answers.toJson()),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      return false;
+    }
 
     if (response.statusCode >= 400) {
-      throw Exception('Failed to post answwers');
+      return false;
     } else {
-      return;
+      return true;
     }
   }
 }

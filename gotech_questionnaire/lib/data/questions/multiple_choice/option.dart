@@ -1,12 +1,12 @@
 import 'option_closed.dart';
 import 'option_open.dart';
 
-abstract class Option {
+abstract class MultipleChoiceOption {
   static const String typeKeyName = 'type';
 
-  Option();
+  MultipleChoiceOption();
 
-  factory Option.fromJson(Map<String, dynamic> json) {
+  factory MultipleChoiceOption.fromJson(Map<String, dynamic> json) {
     var answerType = json[typeKeyName];
     switch (answerType as String) {
       case MultipleChoiceOptionClosed.answerType:
@@ -15,7 +15,7 @@ abstract class Option {
         return MultipleChoiceOptionOpen.fromJson(json);
       default:
         throw Exception(
-            'Unknown type $answerType when deserializing type ${(Option).toString()}.');
+            'Unknown type $answerType when deserializing type ${(MultipleChoiceOption).toString()}.');
     }
   }
 

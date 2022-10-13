@@ -6,7 +6,7 @@ class QuestionnaireAnswers {
     required this.answers,
   });
 
-  String questionnaireId;
+  int questionnaireId;
   List<Answer> answers;
 
   Map<String, dynamic> toJson() => {

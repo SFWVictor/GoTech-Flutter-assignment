@@ -6,8 +6,8 @@
       "subtitle": "Show me what you got!",
       "questions": [
         {
-		  "id": 1,
-		  "required": true,
+          "id": 1,
+          "required": true,
           "type": "multipleChoice",
           "title": "What language is your favourite?",
           "options": [
@@ -26,15 +26,15 @@
           ]
         },
         {
-		  "id": 2,
-		  "required": false,
+          "id": 2,
+          "required": false,
           "type": "open",
           "title": "What do you like about programming?",
           "hint": "Your answer"
         },
         {
-		  "id": 3,
-		  "required": true,
+          "id": 3,
+          "required": true,
           "type": "multipleChoice",
           "title": "How was the assignment?",
           "options": [
@@ -60,6 +60,5 @@
     }
   ],
   "answers": [
-    
   ]
 }

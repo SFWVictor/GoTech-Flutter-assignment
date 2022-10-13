@@ -1,6 +1,6 @@
 import 'option.dart';
 
-class MultipleChoiceOptionClosed extends Option {
+class MultipleChoiceOptionClosed extends MultipleChoiceOption {
   static const answerType = 'closed';
 
   final String caption;

@@ -1,13 +1,11 @@
 import 'option.dart';
 
-class MultipleChoiceOptionOpen extends Option {
+class MultipleChoiceOptionOpen extends MultipleChoiceOption {
   static const answerType = 'open';
 
   final String caption;
 
-  MultipleChoiceOptionOpen({
-    required this.caption,
-  });
+  MultipleChoiceOptionOpen({required this.caption});
 
   factory MultipleChoiceOptionOpen.fromJson(Map<String, dynamic> json) =>
       MultipleChoiceOptionOpen(

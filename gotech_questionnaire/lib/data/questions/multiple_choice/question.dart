@@ -12,7 +12,7 @@ class MultipleChoiceQuestion extends Question {
   }) : super(id, isRequired);
 
   String title;
-  List<Option> options;
+  List<MultipleChoiceOption> options;
 
   factory MultipleChoiceQuestion.fromJson(Map<String, dynamic> json) =>
       MultipleChoiceQuestion(
@@ -20,8 +20,9 @@ class MultipleChoiceQuestion extends Question {
         isRequired: json['required'],
         title: json['title'],
         options: json['options'] == null
-            ? List<Option>.empty()
-            : List<Option>.from(json['options'].map((x) => Option.fromJson(x))),
+            ? List<MultipleChoiceOption>.empty()
+            : List<MultipleChoiceOption>.from(
+                json['options'].map((x) => MultipleChoiceOption.fromJson(x))),
       );
 
   @override
