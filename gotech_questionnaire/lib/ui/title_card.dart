@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gotech_questionnaire/ui/questionnaire_tile.dart';
 
 class TitleCard extends StatelessWidget {
-  static const String hintRequired = "* Required";
+  static const String hintRequired = '* Required';
 
   const TitleCard(
       {Key? key,

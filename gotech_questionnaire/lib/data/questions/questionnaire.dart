@@ -8,6 +8,11 @@ class Questionnaire {
     required this.questions,
   });
 
+  Questionnaire.fromApi({required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.questions,});
+
   int id;
   String title;
   String subtitle;

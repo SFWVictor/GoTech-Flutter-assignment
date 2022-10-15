@@ -31,7 +31,6 @@ class ApiClient {
 
   Future<bool> postAnswers(QuestionnaireAnswers answers) async {
     http.Response response;
-
     try {
       response = await http.post(answersEndpoint,
           body: jsonEncode(answers.toJson()),

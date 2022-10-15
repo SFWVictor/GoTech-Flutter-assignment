@@ -7,7 +7,7 @@
       "questions": [
         {
           "id": 1,
-          "required": true,
+          "required": false,
           "type": "multipleChoice",
           "title": "What language is your favourite?",
           "options": [
@@ -22,6 +22,10 @@
             {
               "type": "closed",
               "caption": "C++"
+            },
+            {
+              "type": "closed",
+              "caption": "C#"
             }
           ]
         },
@@ -34,7 +38,7 @@
         },
         {
           "id": 3,
-          "required": true,
+          "required": false,
           "type": "multipleChoice",
           "title": "How was the assignment?",
           "options": [

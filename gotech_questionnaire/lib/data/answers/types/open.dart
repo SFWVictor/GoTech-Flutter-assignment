@@ -1,9 +1,9 @@
 import '../answer.dart';
 
-class OpenQuestionAnswer extends Answer {
-  final String body;
+class OpenAnswer extends Answer {
+  final String? body;
 
-  OpenQuestionAnswer(questionId, this.body) : super(questionId);
+  OpenAnswer(int questionId, this.body) : super(questionId);
 
   @override
   Map<String, dynamic> toJson() => {

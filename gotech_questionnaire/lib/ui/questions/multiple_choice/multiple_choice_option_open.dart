@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class MultipleChoiceOptionOpen extends StatefulWidget {
   final String value;
-  final String groupValue;
-  void Function(dynamic?) onChanged;
+  final String? groupValue;
+  final void Function(dynamic) onChanged;
 
-  MultipleChoiceOptionOpen(
+  const MultipleChoiceOptionOpen(
       {required this.value, required this.groupValue, required this.onChanged});
 
   @override

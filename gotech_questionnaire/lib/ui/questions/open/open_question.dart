@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../bloc/models/open_question.dart';
 import '../../questionnaire_tile.dart';
 import '../../question_title.dart';
-import '../../../data/questions/open/question.dart' as model;
 
 class OpenQuestion extends StatefulWidget {
-  final model.OpenQuestion question;
+  final OpenQuestionModel question;
 
   const OpenQuestion({Key? key, required this.question}) : super(key: key);
 
@@ -24,15 +24,22 @@ class _OpenQuestionState extends State<OpenQuestion> {
           Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: QuestionTitle(
-                questionText: widget.question.title,
-                isRequired: widget.question.isRequired,
+                questionText: widget.question.data.title,
+                isRequired: widget.question.data.isRequired,
               )),
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: widget.question.hint,
-                  border: const UnderlineInputBorder()),
+            child: StreamBuilder<String>(
+              stream: widget.question.answerStream,
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                return TextField(
+                  onChanged: (text) => widget.question.onAnswerChanged(text),
+                  decoration: InputDecoration(
+                      hintText: widget.question.data.hint,
+                      border: const UnderlineInputBorder(),
+                      errorText: snapshot.error?.toString()),
+                );
+              },
             ),
           )
         ],

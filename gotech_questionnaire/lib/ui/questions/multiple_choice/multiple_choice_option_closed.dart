@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class MultipleChoiceOptionClosed extends StatelessWidget {
   final String value;
-  final String groupValue;
-  void Function(String?) onChanged;
+  final String? groupValue;
+  final void Function(String?) onChanged;
 
-  MultipleChoiceOptionClosed(
+  const MultipleChoiceOptionClosed(
       {required this.value, required this.groupValue, required this.onChanged});
 
   @override

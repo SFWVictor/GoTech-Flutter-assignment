@@ -4,8 +4,7 @@ class QuestionnaireTile extends StatelessWidget {
   final Widget child;
   final bool withLine;
 
-  const QuestionnaireTile(
-      {super.key, required this.child, this.withLine = false});
+  const QuestionnaireTile({required this.child, this.withLine = false});
 
   @override
   build(BuildContext context) {

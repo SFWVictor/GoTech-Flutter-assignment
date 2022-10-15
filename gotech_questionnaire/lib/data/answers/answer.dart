@@ -1,5 +1,5 @@
 abstract class Answer {
-  final String questionId;
+  final int questionId;
 
   Answer(this.questionId);
 

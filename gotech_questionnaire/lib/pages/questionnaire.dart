@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gotech_questionnaire/bloc/questionnaire_bloc.dart';
-import 'package:gotech_questionnaire/data/questions/question.dart';
 
 import '../bloc/bloc_provider.dart';
-import '../data/answers/questionnaire_answers.dart';
-import '../data/questions/questionnaire.dart';
-import '../data/questions/open/question.dart';
-import '../data/questions/multiple_choice/question.dart';
+import '../bloc/models/multiple_choice_question.dart';
+import '../bloc/models/open_question.dart';
+import '../bloc/models/question.dart';
+import '../bloc/questionnaire_model.dart';
 import '../ui/questions/multiple_choice/multiple_choice.dart'
     as multiple_choice_question_widget;
 import '../ui/questions/open/open_question.dart' as open_question_widget;
@@ -49,31 +48,30 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   }
 
   Widget _getPageWidget(QuestionnaireBloc bloc) {
-    return StreamBuilder<Questionnaire?>(
+    return StreamBuilder<QuestionnaireModel?>(
       stream: bloc.questionnaireStream,
       builder: (context, snapshot) {
         final results = snapshot.data;
         if (results == null) {
           return const Center(child: Text('Loading ...'));
         }
-
         return _getQuestionnaireWidget(bloc, results);
       },
     );
   }
 
   Widget _getQuestionnaireWidget(
-      QuestionnaireBloc bloc, Questionnaire questionnaire) {
+      QuestionnaireBloc bloc, QuestionnaireModel model) {
     var columnChildren = <Widget>[];
     columnChildren.addAll([
       const SizedBox(
         height: 15,
       ),
       TitleCard(
-          title: questionnaire.title,
-          subtitle: questionnaire.subtitle,
+          title: model.questionnaireData.title,
+          subtitle: model.questionnaireData.subtitle,
           hasRequiredQuestions:
-              questionnaire.questions.any((question) => question.isRequired)),
+              model.questions.any((question) => question.data.isRequired)),
       const SizedBox(
         height: 15,
       )
@@ -84,9 +82,9 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       separatorBuilder: (context, index) => const SizedBox(
         height: 15,
       ),
-      itemCount: questionnaire.questions.length,
+      itemCount: model.questions.length,
       itemBuilder: (context, index) {
-        final question = questionnaire.questions[index];
+        final question = model.questions[index];
         return _getQuestionWidget(question);
       },
     ));
@@ -98,9 +96,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       Container(
         alignment: Alignment.centerLeft,
         child: ElevatedButton(
-          //TODO pass actual data
-          onPressed: () => bloc.submit
-              .add(QuestionnaireAnswers(questionnaireId: 1, answers: [])),
+          onPressed: () => bloc.submit.add(null),
           style: const ButtonStyle(
               backgroundColor:
                   MaterialStatePropertyAll<Color>(Colors.deepPurple)),
@@ -115,14 +111,14 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     return Column(children: columnChildren);
   }
 
-  Widget _getQuestionWidget(Question question) {
+  Widget _getQuestionWidget(QuestionModel question) {
     switch (question.runtimeType) {
-      case OpenQuestion:
+      case OpenQuestionModel:
         return open_question_widget.OpenQuestion(
-            question: question as OpenQuestion);
-      case MultipleChoiceQuestion:
+            question: question as OpenQuestionModel);
+      case MultipleChoiceQuestionModel:
         return multiple_choice_question_widget.MultipleChoiceQuestion(
-            question: question as MultipleChoiceQuestion);
+            question: question as MultipleChoiceQuestionModel);
       default:
         //TODO handle this somewhere
         throw Exception('Unrecognized question type');
