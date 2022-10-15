@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gotech_questionnaire/bloc/questionnaire_bloc.dart';
 
 import '../bloc/bloc_provider.dart';
-import '../bloc/models/multiple_choice_question.dart';
-import '../bloc/models/open_question.dart';
-import '../bloc/models/question.dart';
+import '../bloc/models/questions/multiple_choice_question.dart';
+import '../bloc/models/questions/open_question.dart';
+import '../bloc/models/questions/question.dart';
 import '../bloc/questionnaire_model.dart';
 import '../ui/questions/multiple_choice/multiple_choice.dart'
     as multiple_choice_question_widget;
@@ -95,13 +95,33 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       ),
       Container(
         alignment: Alignment.centerLeft,
-        child: ElevatedButton(
-          onPressed: () => bloc.submit.add(null),
-          style: const ButtonStyle(
-              backgroundColor:
-                  MaterialStatePropertyAll<Color>(Colors.deepPurple)),
-          child: const Text('Submit'),
-        ),
+        child: Column(children: [
+          StreamBuilder(
+            stream: bloc.submitStream,
+            builder: (context, snapshot) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => bloc.submit.add(null),
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.deepPurple)),
+                    child: const Text('Submit'),
+                  ),
+                  if (snapshot.hasData && !snapshot.data!)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Failed to submit results, please check all required questions.',
+                        style: TextStyle(fontSize: 10, color: Colors.red),
+                      ),
+                    )
+                ],
+              );
+            },
+          )
+        ]),
       ),
       const SizedBox(
         height: 15,
@@ -112,16 +132,13 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   }
 
   Widget _getQuestionWidget(QuestionModel question) {
-    switch (question.runtimeType) {
-      case OpenQuestionModel:
+    switch (question.questionType) {
+      case QuestionType.open:
         return open_question_widget.OpenQuestion(
             question: question as OpenQuestionModel);
-      case MultipleChoiceQuestionModel:
+      case QuestionType.multipleChoice:
         return multiple_choice_question_widget.MultipleChoiceQuestion(
             question: question as MultipleChoiceQuestionModel);
-      default:
-        //TODO handle this somewhere
-        throw Exception('Unrecognized question type');
     }
   }
 }

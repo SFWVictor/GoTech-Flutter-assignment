@@ -19,7 +19,7 @@ class TitleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> children = [
       Padding(
-          padding: EdgeInsets.only(bottom: 15),
+          padding: const EdgeInsets.only(bottom: 15),
           child: Text(
             title,
             textAlign: TextAlign.left,

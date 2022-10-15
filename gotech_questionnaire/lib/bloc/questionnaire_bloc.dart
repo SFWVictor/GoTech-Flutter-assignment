@@ -17,12 +17,14 @@ class QuestionnaireBloc implements Bloc {
   QuestionnaireBloc() {
     questionnaireStream =
         _questionnaireController.stream.asyncMap(_mapResponseToModel);
-    submitStream = _submitController.stream.asyncMap((query) {
+    submitStream = _submitController.stream.asyncMap((query) async {
       if (_lastModel != null) {
         var answers = _lastModel!.getAnswers();
-        return answers != null
-            ? _client.postAnswers(answers)
-            : Future.value(false);
+        if (answers != null) {
+          var result = await _client.postAnswers(answers);
+          _lastModel!.clear();
+          return result;
+        }
       }
 
       return Future.value(false);

@@ -5,6 +5,9 @@ class MultipleChoiceOptionClosed extends MultipleChoiceOption {
 
   final String caption;
 
+  @override
+  MultipleChoiceOptionType get optionType => MultipleChoiceOptionType.closed;
+
   MultipleChoiceOptionClosed({
     required this.caption,
   });

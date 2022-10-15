@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 import 'question.dart';
-import '../../data/questions/multiple_choice/question.dart';
+import '../../../data/questions/multiple_choice/question.dart';
 
 class MultipleChoiceQuestionModel extends QuestionModel {
   final MultipleChoiceQuestion _question;
@@ -20,6 +20,9 @@ class MultipleChoiceQuestionModel extends QuestionModel {
   @override
   bool get isAnswerValid => _isAnswerValid;
 
+  @override
+  QuestionType get questionType => QuestionType.multipleChoice;
+
   set isAnswerValid(bool isAnswerValid) {
     _isAnswerValid = isAnswerValid;
   }
@@ -29,13 +32,13 @@ class MultipleChoiceQuestionModel extends QuestionModel {
 
   MultipleChoiceQuestionModel(this._question) : super(_question) {
     _isAnswerValid = getIsAnswerValid();
-    _validateAnswer = StreamTransformer<String?, String>.fromHandlers(
+    _validateAnswer = StreamTransformer<String?, String?>.fromHandlers(
         handleData: (answer, sink) {
       this.answer = answer;
       _isAnswerValid = getIsAnswerValid();
 
       if (_isAnswerValid) {
-        sink.add(answer!);
+        sink.add(answer);
       } else {
         sink.addError('This question is required.');
       }
@@ -45,6 +48,11 @@ class MultipleChoiceQuestionModel extends QuestionModel {
   bool getIsAnswerValid() =>
       _question.isRequired && answer != null && answer!.isNotEmpty ||
       !_question.isRequired;
+
+  @override
+  void clear() {
+    onAnswerChanged(null);
+  }
 
   @override
   void dispose() {

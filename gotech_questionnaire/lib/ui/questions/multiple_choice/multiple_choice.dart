@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../data/questions/multiple_choice/option.dart';
 import '../../../data/questions/multiple_choice/option_closed.dart';
 import '../../../ui/question_title.dart';
-import '../../../bloc/models/multiple_choice_question.dart';
+import '../../../bloc/models/questions/multiple_choice_question.dart';
 import '../../../data/questions/multiple_choice/option_open.dart';
 import '../../questionnaire_tile.dart';
 import 'multiple_choice_option_open.dart' as option_open;
@@ -31,8 +32,8 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
       stream: widget.question.answerStream,
       builder: (context, snapshot) {
         var options = widget.question.data.options.map((option) {
-          switch (option.runtimeType) {
-            case MultipleChoiceOptionOpen:
+          switch (option.optionType) {
+            case MultipleChoiceOptionType.open:
               var optionOpen = option as MultipleChoiceOptionOpen;
               return option_open.MultipleChoiceOptionOpen(
                 value: optionOpen.caption,
@@ -40,16 +41,13 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
                 onChanged: (answer) => widget.question.onAnswerChanged(answer),
               );
 
-            case MultipleChoiceOptionClosed:
+            case MultipleChoiceOptionType.closed:
               var optionClosed = option as MultipleChoiceOptionClosed;
               return option_closed.MultipleChoiceOptionClosed(
                 value: optionClosed.caption,
                 groupValue: snapshot.data,
                 onChanged: (answer) => widget.question.onAnswerChanged(answer),
               );
-
-            default:
-              throw Exception('Unrecognized option type.');
           }
         });
 

@@ -2,15 +2,16 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 import 'question.dart';
-import '../../data/questions/open/question.dart';
+import '../../../data/questions/open/question.dart';
 
 class OpenQuestionModel extends QuestionModel {
   final OpenQuestion _question;
-  final StreamController<String> _answerController = BehaviorSubject<String>();
-  late StreamTransformer<String, String> _validateAnswer;
+  final StreamController<String?> _answerController =
+      BehaviorSubject<String?>();
+  late StreamTransformer<String?, String?> _validateAnswer;
 
-  Function(String) get onAnswerChanged => _answerController.sink.add;
-  Stream<String> get answerStream =>
+  Function(String?) get onAnswerChanged => _answerController.sink.add;
+  Stream<String?> get answerStream =>
       _answerController.stream.transform(_validateAnswer);
 
   String? answer;
@@ -18,6 +19,9 @@ class OpenQuestionModel extends QuestionModel {
 
   @override
   bool get isAnswerValid => _isAnswerValid;
+
+  @override
+  QuestionType get questionType => QuestionType.open;
 
   set isAnswerValid(bool isAnswerValid) {
     _isAnswerValid = isAnswerValid;
@@ -28,13 +32,12 @@ class OpenQuestionModel extends QuestionModel {
 
   OpenQuestionModel(this._question) : super(_question) {
     _isAnswerValid = getIsAnswerValid();
-    _validateAnswer = StreamTransformer<String, String>.fromHandlers(
+    _validateAnswer = StreamTransformer<String?, String?>.fromHandlers(
         handleData: (answer, sink) {
       this.answer = answer;
-      isAnswerValid =
-          _question.isRequired && answer.isNotEmpty || !_question.isRequired;
+      _isAnswerValid = getIsAnswerValid();
 
-      if (isAnswerValid) {
+      if (_isAnswerValid) {
         sink.add(answer);
       } else {
         sink.addError('This question is required.');
@@ -45,6 +48,11 @@ class OpenQuestionModel extends QuestionModel {
   bool getIsAnswerValid() =>
       _question.isRequired && answer != null && answer!.isNotEmpty ||
       !_question.isRequired;
+
+  @override
+  void clear() {
+    onAnswerChanged(null);
+  }
 
   @override
   void dispose() {

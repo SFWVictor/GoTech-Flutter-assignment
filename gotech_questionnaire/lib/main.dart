@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gotech_questionnaire/bloc/questionnaire_bloc.dart';
 
+import 'bloc/questionnaire_bloc.dart';
 import 'bloc/bloc_provider.dart';
 import 'pages/questionnaire.dart';
 void main() {

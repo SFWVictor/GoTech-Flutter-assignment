@@ -4,6 +4,8 @@ import 'option_open.dart';
 abstract class MultipleChoiceOption {
   static const String typeKeyName = 'type';
 
+  MultipleChoiceOptionType get optionType;
+
   MultipleChoiceOption();
 
   factory MultipleChoiceOption.fromJson(Map<String, dynamic> json) {
@@ -21,3 +23,5 @@ abstract class MultipleChoiceOption {
 
   Map<String, dynamic> toJson();
 }
+
+enum MultipleChoiceOptionType { open, closed }

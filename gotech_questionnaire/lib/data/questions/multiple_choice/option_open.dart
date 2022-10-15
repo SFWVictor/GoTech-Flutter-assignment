@@ -5,6 +5,9 @@ class MultipleChoiceOptionOpen extends MultipleChoiceOption {
 
   final String caption;
 
+  @override
+  MultipleChoiceOptionType get optionType => MultipleChoiceOptionType.open;
+
   MultipleChoiceOptionOpen({required this.caption});
 
   factory MultipleChoiceOptionOpen.fromJson(Map<String, dynamic> json) =>

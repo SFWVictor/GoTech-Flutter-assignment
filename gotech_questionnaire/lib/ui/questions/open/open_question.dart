@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../bloc/models/open_question.dart';
+import '../../../bloc/models/questions/open_question.dart';
 import '../../questionnaire_tile.dart';
 import '../../question_title.dart';
 
@@ -13,6 +13,8 @@ class OpenQuestion extends StatefulWidget {
 }
 
 class _OpenQuestionState extends State<OpenQuestion> {
+  final TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return QuestionnaireTile(
@@ -29,10 +31,15 @@ class _OpenQuestionState extends State<OpenQuestion> {
               )),
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: StreamBuilder<String>(
+            child: StreamBuilder<String?>(
               stream: widget.question.answerStream,
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                if (snapshot.data == null) {
+                  _textEditingController.clear();
+                }
+
                 return TextField(
+                  controller: _textEditingController,
                   onChanged: (text) => widget.question.onAnswerChanged(text),
                   decoration: InputDecoration(
                       hintText: widget.question.data.hint,

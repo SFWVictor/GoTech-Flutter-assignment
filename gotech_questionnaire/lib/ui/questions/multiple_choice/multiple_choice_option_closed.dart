@@ -6,7 +6,10 @@ class MultipleChoiceOptionClosed extends StatelessWidget {
   final void Function(String?) onChanged;
 
   const MultipleChoiceOptionClosed(
-      {required this.value, required this.groupValue, required this.onChanged});
+      {super.key,
+      required this.value,
+      required this.groupValue,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

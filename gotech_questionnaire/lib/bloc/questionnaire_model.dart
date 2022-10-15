@@ -1,12 +1,12 @@
-import 'package:gotech_questionnaire/bloc/models/multiple_choice_question.dart';
-import 'package:gotech_questionnaire/bloc/models/open_question.dart';
+import 'package:gotech_questionnaire/bloc/models/questions/multiple_choice_question.dart';
+import 'package:gotech_questionnaire/bloc/models/questions/open_question.dart';
 import 'package:gotech_questionnaire/data/answers/questionnaire_answers.dart';
 import 'package:gotech_questionnaire/data/answers/types/open.dart';
 
 import '../data/answers/answer.dart';
 import '../data/answers/types/multiple_choice.dart';
 import '../data/questions/questionnaire.dart';
-import 'models/question.dart';
+import 'models/questions/question.dart';
 
 class QuestionnaireModel {
   final Questionnaire questionnaireData;
@@ -21,6 +21,12 @@ class QuestionnaireModel {
   bool get areAnswersValid =>
       questions.every((question) => question.isAnswerValid);
 
+  void clear() {
+    for (var question in questions) {
+      question.clear();
+    }
+  }
+
   void dispose() {
     for (var question in questions) {
       question.dispose();
@@ -34,16 +40,14 @@ class QuestionnaireModel {
         questionnaireId: questionnaireData.id,
         answers: questions
             .map((q) {
-              switch (q.runtimeType) {
-                case OpenQuestionModel:
+              switch (q.questionType) {
+                case QuestionType.open:
                   var model = q as OpenQuestionModel;
                   return OpenAnswer(model.data.id, model.answer);
-                case MultipleChoiceQuestionModel:
+                case QuestionType.multipleChoice:
                   var model = q as MultipleChoiceQuestionModel;
                   return MultipleChoiceAnswer(model.data.id, model.answer);
               }
-
-              return null;
             })
             .whereType<Answer>()
             .toList());
