@@ -6,7 +6,7 @@
       "subtitle": "Show me what you got!",
       "questions": [
         {
-          "id": 1,
+          "id": 123,
           "required": false,
           "type": "multipleChoice",
           "title": "What language is your favourite?",
@@ -30,14 +30,14 @@
           ]
         },
         {
-          "id": 2,
+          "id": 200,
           "required": false,
           "type": "open",
           "title": "What do you like about programming?",
           "hint": "Your answer"
         },
         {
-          "id": 3,
+          "id": 300,
           "required": false,
           "type": "multipleChoice",
           "title": "How was the assignment?",
@@ -64,5 +64,23 @@
     }
   ],
   "answers": [
+    {
+      "questionnaireId": 1,
+      "answers": [
+        {
+          "questionId": 123,
+          "body": "C#"
+        },
+        {
+          "questionId": 200,
+          "body": "Learning new things"
+        },
+        {
+          "questionId": 300,
+          "body": "Normal"
+        }
+      ],
+      "id": 1
+    }
   ]
 }
