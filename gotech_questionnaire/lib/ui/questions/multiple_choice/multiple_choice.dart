@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../bloc/models/answers/multiple_choice/no_answer.dart';
+import '../../../bloc/models/answers/multiple_choice/answer.dart';
+import '../../../bloc/models/answers/multiple_choice/closed_answer.dart';
 import '../../../data/questions/multiple_choice/option.dart';
 import '../../../data/questions/multiple_choice/option_closed.dart';
 import '../../../ui/question_title.dart';
@@ -28,25 +31,31 @@ class _MultipleChoiceQuestionState extends State<MultipleChoiceQuestion> {
             questionText: widget.question.data.title,
             isRequired: widget.question.data.isRequired)));
 
-    columnTiles.add(StreamBuilder<String?>(
+    columnTiles.add(StreamBuilder<MultipleChoiceAnswerModel>(
       stream: widget.question.answerStream,
       builder: (context, snapshot) {
+        var groupValue = snapshot.data ?? MultipleChoiceNoAnswerModel();
+
         var options = widget.question.data.options.map((option) {
           switch (option.optionType) {
             case MultipleChoiceOptionType.open:
               var optionOpen = option as MultipleChoiceOptionOpen;
               return option_open.MultipleChoiceOptionOpen(
+                caption: optionOpen.caption,
                 value: optionOpen.caption,
-                groupValue: snapshot.data,
-                onChanged: (answer) => widget.question.onAnswerChanged(answer),
+                groupValue: groupValue,
+                onChanged: (answer) => widget.question
+                    .onAnswerChanged(answer ?? MultipleChoiceNoAnswerModel()),
               );
 
             case MultipleChoiceOptionType.closed:
               var optionClosed = option as MultipleChoiceOptionClosed;
               return option_closed.MultipleChoiceOptionClosed(
-                value: optionClosed.caption,
-                groupValue: snapshot.data,
-                onChanged: (answer) => widget.question.onAnswerChanged(answer),
+                caption: optionClosed.caption,
+                value: MultipleChoiceClosedAnswerModel(optionClosed.caption),
+                groupValue: groupValue,
+                onChanged: (answer) => widget.question
+                    .onAnswerChanged(answer ?? MultipleChoiceNoAnswerModel()),
               );
           }
         });

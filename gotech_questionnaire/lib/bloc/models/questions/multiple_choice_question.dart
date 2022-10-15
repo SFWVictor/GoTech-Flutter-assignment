@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-import 'question.dart';
+import '../answers/multiple_choice/answer.dart';
+import '../answers/multiple_choice/no_answer.dart';
 import '../../../data/questions/multiple_choice/question.dart';
+import 'question.dart';
 
 class MultipleChoiceQuestionModel extends QuestionModel {
   final MultipleChoiceQuestion _question;
-  final StreamController<String?> _answerController =
-      BehaviorSubject<String?>();
-  late StreamTransformer<String?, String?> _validateAnswer;
+  final StreamController<MultipleChoiceAnswerModel> _answerController =
+      BehaviorSubject<MultipleChoiceAnswerModel>();
+  late StreamTransformer<MultipleChoiceAnswerModel, MultipleChoiceAnswerModel>
+      _validateAnswer;
 
-  Function(String?) get onAnswerChanged => _answerController.sink.add;
-  Stream<String?> get answerStream =>
+  Function(MultipleChoiceAnswerModel) get onAnswerChanged =>
+      _answerController.sink.add;
+  Stream<MultipleChoiceAnswerModel> get answerStream =>
       _answerController.stream.transform(_validateAnswer);
 
-  String? answer;
+  MultipleChoiceAnswerModel answer = MultipleChoiceNoAnswerModel();
   late bool _isAnswerValid;
 
   @override
@@ -32,8 +36,8 @@ class MultipleChoiceQuestionModel extends QuestionModel {
 
   MultipleChoiceQuestionModel(this._question) : super(_question) {
     _isAnswerValid = getIsAnswerValid();
-    _validateAnswer = StreamTransformer<String?, String?>.fromHandlers(
-        handleData: (answer, sink) {
+    _validateAnswer = StreamTransformer<MultipleChoiceAnswerModel,
+        MultipleChoiceAnswerModel>.fromHandlers(handleData: (answer, sink) {
       this.answer = answer;
       _isAnswerValid = getIsAnswerValid();
 
@@ -45,13 +49,23 @@ class MultipleChoiceQuestionModel extends QuestionModel {
     });
   }
 
-  bool getIsAnswerValid() =>
-      _question.isRequired && answer != null && answer!.isNotEmpty ||
-      !_question.isRequired;
+  bool getIsAnswerValid() {
+    if (_question.isRequired) {
+      switch (answer.answerType) {
+        case MultipleChoiceAnswerType.none:
+          return false;
+        case MultipleChoiceAnswerType.closed:
+        case MultipleChoiceAnswerType.open:
+          return true;
+      }
+    }
+
+    return true;
+  }
 
   @override
   void clear() {
-    onAnswerChanged(null);
+    onAnswerChanged(MultipleChoiceNoAnswerModel());
   }
 
   @override

@@ -1,8 +1,7 @@
-import 'package:gotech_questionnaire/bloc/models/questions/multiple_choice_question.dart';
-import 'package:gotech_questionnaire/bloc/models/questions/open_question.dart';
-import 'package:gotech_questionnaire/data/answers/questionnaire_answers.dart';
-import 'package:gotech_questionnaire/data/answers/types/open.dart';
-
+import '../bloc/models/questions/multiple_choice_question.dart';
+import '../bloc/models/questions/open_question.dart';
+import '../data/answers/questionnaire_answers.dart';
+import '../data/answers/types/open.dart';
 import '../data/answers/answer.dart';
 import '../data/answers/types/multiple_choice.dart';
 import '../data/questions/questionnaire.dart';

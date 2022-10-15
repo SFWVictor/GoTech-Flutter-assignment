@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import '../../../bloc/models/answers/multiple_choice/open_answer.dart';
+import '../../../bloc/models/answers/multiple_choice/answer.dart';
 
 class MultipleChoiceOptionOpen extends StatefulWidget {
+  final String caption;
   final String value;
-  final String? groupValue;
-  final void Function(String?) onChanged;
+  final MultipleChoiceAnswerModel groupValue;
+  final void Function(MultipleChoiceAnswerModel?) onChanged;
 
   const MultipleChoiceOptionOpen(
       {super.key,
+      required this.caption,
       required this.value,
       required this.groupValue,
       required this.onChanged});
@@ -18,6 +22,9 @@ class MultipleChoiceOptionOpen extends StatefulWidget {
 
 class _MultipleChoiceOptionOpenState extends State<MultipleChoiceOptionOpen> {
   final _textEditingController = TextEditingController();
+
+  MultipleChoiceOpenAnswerModel get answerModel =>
+      MultipleChoiceOpenAnswerModel(_textEditingController.text);
 
   @override
   void initState() {
@@ -34,20 +41,29 @@ class _MultipleChoiceOptionOpenState extends State<MultipleChoiceOptionOpen> {
 
   @override
   Widget build(BuildContext context) {
-    var textField = TextField(
-      controller: _textEditingController,
-      enabled: _textEditingController.text == widget.groupValue,
-    );
+    MultipleChoiceOpenAnswerModel? groupAnswerModel;
+    MultipleChoiceOpenAnswerModel localAnswerModel = answerModel;
+
+    if (widget.groupValue.answerType == MultipleChoiceAnswerType.open) {
+      groupAnswerModel = widget.groupValue as MultipleChoiceOpenAnswerModel;
+    }
+
+    var isTextFieldEnabled =
+        groupAnswerModel != null && localAnswerModel == groupAnswerModel;
 
     return ListTile(
       title: Row(children: [
-        Text(widget.value),
+        Text(widget.caption),
         Expanded(
             child: Padding(
-                padding: const EdgeInsets.only(left: 15), child: textField))
+                padding: const EdgeInsets.only(left: 15),
+                child: TextField(
+                  controller: _textEditingController,
+                  enabled: isTextFieldEnabled,
+                )))
       ]),
       leading: Radio(
-        value: _textEditingController.text,
+        value: localAnswerModel,
         groupValue: widget.groupValue,
         onChanged: widget.onChanged,
       ),
@@ -55,6 +71,6 @@ class _MultipleChoiceOptionOpenState extends State<MultipleChoiceOptionOpen> {
   }
 
   void _onTextChanged() {
-    widget.onChanged(_textEditingController.text);
+    widget.onChanged(answerModel);
   }
 }

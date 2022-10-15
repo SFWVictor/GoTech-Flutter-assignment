@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gotech_questionnaire/bloc/questionnaire_bloc.dart';
+import '../bloc/questionnaire_bloc.dart';
 
 import '../bloc/bloc_provider.dart';
 import '../bloc/models/questions/multiple_choice_question.dart';

@@ -1,9 +1,25 @@
+import '../../../bloc/models/answers/multiple_choice/closed_answer.dart';
+import '../../../bloc/models/answers/multiple_choice/answer.dart';
+import '../../../bloc/models/answers/multiple_choice/open_answer.dart';
 import '../answer.dart';
 
 class MultipleChoiceAnswer extends Answer {
-  final String? body;
+  late String? body;
 
-  MultipleChoiceAnswer(int questionId, this.body) : super(questionId);
+  MultipleChoiceAnswer(int questionId, MultipleChoiceAnswerModel answer)
+      : super(questionId) {
+    switch (answer.answerType) {
+      case MultipleChoiceAnswerType.none:
+        body = null;
+        break;
+      case MultipleChoiceAnswerType.closed:
+        body = (answer as MultipleChoiceClosedAnswerModel).body;
+        break;
+      case MultipleChoiceAnswerType.open:
+        body = (answer as MultipleChoiceOpenAnswerModel).body;
+        break;
+    }
+  }
 
   @override
   Map<String, dynamic> toJson() => {

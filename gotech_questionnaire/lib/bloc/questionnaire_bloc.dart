@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:gotech_questionnaire/bloc/questionnaire_model.dart';
+import '../bloc/questionnaire_model.dart';
 import '../data/api_client.dart';
 import 'bloc.dart';
 
